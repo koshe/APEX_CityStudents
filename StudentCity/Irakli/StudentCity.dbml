@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="myDataBase" Class="StudentCityDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SKRILLEX-PC;Initial Catalog=myDataBase;Integrated Security=True" SettingsObjectName="Irakli.Properties.Settings" SettingsPropertyName="myDataBaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.City" Member="Cities">
+    <Type Name="City">
+      <Column Name="City_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CityName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="City_Student" Member="Students" ThisKey="City_id" OtherKey="City_id" Type="Student" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId1">
+      <Argument Parameter="cityId" Member="City_id" />
+      <Argument Parameter="cityName" Member="CityName" />
+    </InsertFunction>
+    <UpdateFunction FunctionId="FunctionId2">
+      <Argument Parameter="city_id" Member="City_id" />
+      <Argument Parameter="cityName" Member="CityName" />
+    </UpdateFunction>
+    <DeleteFunction FunctionId="FunctionId3">
+      <Argument Parameter="city_id" Member="City_id" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.Students" Member="Students">
+    <Type Name="Student">
+      <Column Name="Student_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="City_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="PersonalID" Type="System.String" DbType="NVarChar(11)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="City_Student" Member="City" ThisKey="City_id" OtherKey="City_id" Type="City" IsForeignKey="true" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId4">
+      <Argument Parameter="city_id" Member="City_id" />
+      <Argument Parameter="firstName" Member="FirstName" />
+      <Argument Parameter="lastName" Member="LastName" />
+      <Argument Parameter="personalID" Member="PersonalID" />
+      <Argument Parameter="phoneNumber" Member="PhoneNumber" />
+    </InsertFunction>
+    <UpdateFunction FunctionId="FunctionId5">
+      <Argument Parameter="student_id" Member="Student_id" />
+      <Argument Parameter="city_id" Member="City_id" />
+      <Argument Parameter="firstName" Member="FirstName" />
+      <Argument Parameter="lastName" Member="LastName" />
+      <Argument Parameter="personalID" Member="PersonalID" />
+      <Argument Parameter="phoneNumber" Member="PhoneNumber" />
+    </UpdateFunction>
+    <DeleteFunction FunctionId="FunctionId6">
+      <Argument Parameter="student_id" Member="Student_id" />
+    </DeleteFunction>
+  </Table>
+  <Function Id="FunctionId4" Name="dbo.AddStudents" Method="AddStudents">
+    <Parameter Name="City_id" Parameter="city_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="PersonalID" Parameter="personalID" Type="System.String" DbType="NVarChar(11)" />
+    <Parameter Name="PhoneNumber" Parameter="phoneNumber" Type="System.String" DbType="NVarChar(100)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetStudents" Method="GetStudents">
+    <Parameter Name="City_id" Parameter="city_id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetStudentsResult">
+      <Column Name="Student_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="City_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(201) NOT NULL" CanBeNull="false" />
+      <Column Name="PersonalID" Type="System.String" DbType="NVarChar(11)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Id="FunctionId3" Name="dbo.DeleteCity" Method="DeleteCity">
+    <Parameter Name="City_id" Parameter="city_id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId6" Name="dbo.DeleteStudents" Method="DeleteStudents">
+    <Parameter Name="Student_id" Parameter="student_id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId2" Name="dbo.EditCity" Method="EditCity">
+    <Parameter Name="City_id" Parameter="city_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CityName" Parameter="cityName" Type="System.String" DbType="NVarChar(100)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId5" Name="dbo.EditStudents" Method="EditStudents">
+    <Parameter Name="Student_id" Parameter="student_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="City_id" Parameter="city_id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FirstName" Parameter="firstName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="LastName" Parameter="lastName" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="PersonalID" Parameter="personalID" Type="System.String" DbType="NVarChar(11)" />
+    <Parameter Name="PhoneNumber" Parameter="phoneNumber" Type="System.String" DbType="NVarChar(100)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.GetCity" Method="GetCity">
+    <ElementType Name="GetCityResult">
+      <Column Name="City_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CityName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Id="FunctionId1" Name="dbo.AddCity" Method="AddCity">
+    <Parameter Name="CityId" Parameter="cityId" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="CityName" Parameter="cityName" Type="System.String" DbType="NVarChar(100)" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

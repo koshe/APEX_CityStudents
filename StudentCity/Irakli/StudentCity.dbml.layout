@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="StudentCity">
+  <DataContextMoniker Name="/StudentCityDataContext" />
+  <nestedChildShapes>
+    <classShape Id="82e79b4e-937d-425f-b990-62cda7c652cf" absoluteBounds="0.5, 1.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/StudentCityDataContext/City" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ad46c2c0-36f0-4df2-8f5b-e5269562b1f5" absoluteBounds="0.51499999999999968, 1.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="49d37698-05bf-4873-af70-4c676517ead5" absoluteBounds="2.875, 1.125, 2, 1.9631982421875">
+      <DataClassMoniker Name="/StudentCityDataContext/Student" />
+      <nestedChildShapes>
+        <elementListCompartment Id="056336b4-4c6f-45ae-ab2a-12dcb6a010f8" absoluteBounds="2.89, 1.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 1.84699625651042); (2.875 : 1.84699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/StudentCityDataContext/City/City_Student" />
+      <nodes>
+        <classShapeMoniker Id="82e79b4e-937d-425f-b990-62cda7c652cf" />
+        <classShapeMoniker Id="49d37698-05bf-4873-af70-4c676517ead5" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
