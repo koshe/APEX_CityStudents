@@ -47,7 +47,7 @@ namespace Irakli.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("450, 250")]
+        [global::System.Configuration.DefaultSettingValueAttribute("950, 500")]
         public global::System.Drawing.Size Size {
             get {
                 return ((global::System.Drawing.Size)(this["Size"]));
