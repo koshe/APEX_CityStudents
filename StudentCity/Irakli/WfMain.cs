@@ -20,9 +20,25 @@ namespace Irakli{
 
         private void WfMain_Load(object sender, EventArgs e){
             LoadData();
+	        LoadForm();
         }
 
-        private void LoadData()
+	    private void LoadForm(){
+			if(Properties.Settings.Default.Maximized) {
+				WindowState = FormWindowState.Maximized;
+				Location = Properties.Settings.Default.Location;
+				Size = Properties.Settings.Default.Size;
+			} else if(Properties.Settings.Default.Minimized) {
+				WindowState = FormWindowState.Minimized;
+				Location = Properties.Settings.Default.Location;
+				Size = Properties.Settings.Default.Size;
+			} else {
+				Location = Properties.Settings.Default.Location;
+				Size = Properties.Settings.Default.Size;
+			}
+	    }
+
+	    private void LoadData()
         {
             LoadStudents();
             LoadCity();
@@ -66,7 +82,7 @@ namespace Irakli{
                 MessageBox.Show(ex.Message);
             }
             LoadCity();
-            LoadStudents();
+			LoadStudents(Int32.Parse(dgvCity.CurrentRow.Cells["dgCity_City_id"].Value.ToString()));
         }
 
         private void btnEditCity_Click(object sender, EventArgs e)
@@ -121,6 +137,7 @@ namespace Irakli{
 
         private void AddStudent() {
             var frm = new WfStudentAddEdit { Edit = false };
+			frm.cbCity.SelectedValue = Int32.Parse(dgvCity.CurrentRow.Cells["dgCity_City_id"].Value.ToString());
             frm.ShowDialog();
             LoadStudents();
         }
@@ -155,9 +172,10 @@ namespace Irakli{
             if (DgStudent.CurrentRow == null ||
                 MessageBox.Show("გსურთ ჩანაწერის წაშლა?", "წაშლა", MessageBoxButtons.OKCancel) != DialogResult.OK)
             {
+				return;
             }
             StudentCityDataContext dc = Helpers.SCDC;
-                dc.DeleteCity(Int32.Parse(DgStudent.CurrentRow.Cells["dgStudent_Student_id"].Value.ToString()));
+                dc.DeleteStudents(Int32.Parse(DgStudent.CurrentRow.Cells["dgStudent_Student_id"].Value.ToString()));
                 try {
                     LoadStudents(dgvCity.CurrentRow == null ? 0 : Int32.Parse(dgvCity.CurrentRow.Cells["dgCity_City_id"].Value.ToString()));
                 } catch (Exception ex) {
@@ -204,10 +222,6 @@ namespace Irakli{
                 dg.Focus();
                 cmsCity.Show();
             }
-            else if (e.Button==MouseButtons.Left)
-            {
-                LoadStudents(Int32.Parse(dgvCity.CurrentRow.Cells["dgCity_City_id"].Value.ToString()));
-            }
         }
 
         private void DgStudent_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
@@ -218,5 +232,34 @@ namespace Irakli{
             dg.Focus();
             cmsStudents.Show();
         }
+
+		private void dgvCity_RowEnter(object sender, DataGridViewCellEventArgs e) {
+			if(dgvCity.CurrentRow !=null) {
+			LoadStudents(Int32.Parse(dgvCity.Rows[e.RowIndex].Cells["dgCity_City_id"].Value.ToString()));
+				
+			} else{
+				LoadStudents();
+			}
+		}
+
+		private void WfMain_FormClosing(object sender, FormClosingEventArgs e) {
+			if(WindowState == FormWindowState.Maximized) {
+				Properties.Settings.Default.Location = RestoreBounds.Location;
+				Properties.Settings.Default.Size = RestoreBounds.Size;
+				Properties.Settings.Default.Maximized = true;
+				Properties.Settings.Default.Minimized = false;
+			} else if(WindowState == FormWindowState.Normal) {
+				Properties.Settings.Default.Location = Location;
+				Properties.Settings.Default.Size = Size;
+				Properties.Settings.Default.Maximized = false;
+				Properties.Settings.Default.Minimized = false;
+			} else {
+				Properties.Settings.Default.Location = RestoreBounds.Location;
+				Properties.Settings.Default.Size = RestoreBounds.Size;
+				Properties.Settings.Default.Maximized = false;
+				Properties.Settings.Default.Minimized = true;
+			}
+			Properties.Settings.Default.Save();
+		}
     }
 }

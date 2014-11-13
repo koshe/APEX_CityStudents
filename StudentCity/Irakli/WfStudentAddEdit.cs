@@ -51,12 +51,12 @@ namespace Irakli {
                     }
                     catch (SqlException ex)
                     {
-                        if (ex.Number == 2601)
-                        {
-                            MessageBox.Show("სტუდენტი მოცემული პირადი ნომრით უკვე დარეგისტრირებულია.");
-                        } else {
+						//if (ex.Number == 2601)
+						//{
+						//	MessageBox.Show("სტუდენტი მოცემული პირადი ნომრით უკვე დარეგისტრირებულია.");
+						//} else {
                             MessageBox.Show(ex.Message);
-                        }
+						//}
                     }
                     //catch (Exception ex)
                     //{
@@ -75,13 +75,13 @@ namespace Irakli {
                         dc.SubmitChanges();
                         this.Close();
                     } catch (SqlException ex) {
-                        if (ex.Number == 2627) {
-                            MessageBox.Show("სტუდენტი მოცემული პირადი ნომრით უკვე დარეგისტრირებულია.");
-                        }
-                        else
-                        {
+						//if (ex.Number == 2627) {
+						//	MessageBox.Show("სტუდენტი მოცემული პირადი ნომრით უკვე დარეგისტრირებულია.");
+						//}
+						//else
+						//{
                             MessageBox.Show(ex.Message);
-                        }
+						//}
                     } catch (Exception ex) {
                         MessageBox.Show(ex.Message);
                     }
@@ -118,6 +118,10 @@ namespace Irakli {
                 _validationMessage += "პირადი ნომერი არასწორია! " + Environment.NewLine;
                 retVal = false;
             }
+			if(Helpers.SCDC.Students.First(x => x.PersonalID == tbPersonalID.Text) == null){
+				_validationMessage += "მომხმარებელი იგივე პირადი ნომრით უკვე არსებობს !" + Environment.NewLine;
+				retVal = false;
+			}
             return retVal;
         }
 
